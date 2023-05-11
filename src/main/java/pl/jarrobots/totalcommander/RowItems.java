@@ -11,15 +11,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class RowItems {
-    ArrayList<RowItem> list;
+    private String root;
+    private ArrayList<RowItem> list;
 
-    public RowItems(RowItem root) throws IOException {
-        list = generateList(root);
+    public RowItems() throws IOException {
+        String url = System.getProperty("user.dir");
+        list = generateList(url);
+        this.root = url;
     }
-    private ArrayList<RowItem> generateList( RowItem root) throws IOException {
+    private ArrayList<RowItem> generateList( String url) throws IOException {
         ArrayList<RowItem> list = new ArrayList<>();
-        list.add(root);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(root.getURL()))) {
+        list.add(new RowItem(url,url,true,null));
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(url))) {
             for (Path path : stream) {
                 list.add(new RowItem(path.toString(), path.getFileName().toString(), Files.isDirectory(path), Files.getLastModifiedTime(path)));
             }
@@ -30,4 +33,16 @@ public class RowItems {
     public ObservableList<RowItem> getList(){
         return FXCollections.observableList(list);
     }
+
+    public ObservableList<RowItem> getList(String name){
+        try {
+            root= name;
+            list = generateList(root);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return FXCollections.observableList(list);
+    }
+
 }

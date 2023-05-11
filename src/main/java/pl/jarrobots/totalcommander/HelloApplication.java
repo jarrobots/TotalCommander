@@ -2,10 +2,7 @@ package pl.jarrobots.totalcommander;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -29,8 +26,8 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage window) throws IOException {
-        RowItems list1 = new RowItems(new RowItem("/Users/jarek","/Users/jarek", true,null));
-        RowItems list2 = new RowItems(new RowItem("/Users/jarek","/Users/jarek", true,null));
+        RowItems list1 = new RowItems();
+        RowItems list2 = new RowItems();
 
         submit1 = new Button("Submit");
         submit2 = new Button("Submit");
@@ -72,6 +69,30 @@ public class HelloApplication extends Application {
         table2.getColumns().addAll(image2,name2,time2);
         table2.setItems(list2.getList());
 
+        submit1.setOnAction(e->onClick(list1,text1.getText(),table1));
+        submit2.setOnAction(e->onClick(list2,text2.getText(),table2));
+
+
+        table1.setOnMouseDragged( e -> {
+            RowItem item = table1.getSelectionModel().getSelectedItem();
+            list2.
+        });
+
+        table1.setRowFactory( tv -> {
+            TableRow<RowItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) onClickDir(list1, table1);
+            });
+            return row;
+        });
+        table2.setRowFactory( tv -> {
+            TableRow<RowItem> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) onClickDir(list2, table2);
+            });
+            return row;
+        });
+
         h1.getChildren().addAll(text1, submit1);
         h2.getChildren().addAll(text2, submit2);
         v1.getChildren().addAll(h1,table1);
@@ -84,5 +105,20 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+
+    private void onClick(RowItems list, String name, TableView<RowItem> table){
+
+        table.setItems(list.getList(name));
+        text1.clear();
+        text2.clear();
+    }
+
+    private void onClickDir(RowItems list, TableView<RowItem> table){
+        table.setItems(list.getList(table.getSelectionModel().getSelectedItem().getURL()));
+    }
+    private void onClickFil( TableView<RowItem> table){
+        table.ge
     }
 }
