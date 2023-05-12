@@ -1,9 +1,12 @@
 package pl.jarrobots.totalcommander;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -75,7 +78,7 @@ public class HelloApplication extends Application {
 
         table1.setOnMouseDragged( e -> {
             RowItem item = table1.getSelectionModel().getSelectedItem();
-            list2.
+
         });
 
         table1.setRowFactory( tv -> {
@@ -98,7 +101,24 @@ public class HelloApplication extends Application {
         v1.getChildren().addAll(h1,table1);
         v2.getChildren().addAll(h2,table2);
         hBox.getChildren().addAll(v1,v2);
+
         Scene scene = new Scene(hBox);
+        scene.setOnKeyPressed( e -> {
+                switch (e.getCode()) {
+                    case F7:
+                        Functions.add(table1.getItems().get(0).getURL(), );
+                        break;
+                    case F8:
+                        if(table1.getSelectionModel() != null) {
+                            Functions.rm(table1.getSelectionModel().getSelectedItem().getURL());
+                        }
+                        else if(table2.getSelectionModel() != null){
+                            Functions.rm(table2.getSelectionModel().getSelectedItem().getURL());
+                        }
+                        break;
+                }
+        });
+
         window.setScene(scene);
         window.show();
     }
@@ -118,7 +138,16 @@ public class HelloApplication extends Application {
     private void onClickDir(RowItems list, TableView<RowItem> table){
         table.setItems(list.getList(table.getSelectionModel().getSelectedItem().getURL()));
     }
-    private void onClickFil( TableView<RowItem> table){
-        table.ge
+    private String nameBox(){
+        TextField field = new TextField();
+        Button submit = new Button();
+        Stage window = new Stage();
+        HBox box = new HBox();
+
+
+        box.getChildren().addAll(field,submit);
+        window.setResizable(false);
+        window.setScene(new Scene(box));
     }
+
 }

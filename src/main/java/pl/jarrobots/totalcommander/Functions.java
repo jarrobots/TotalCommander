@@ -30,10 +30,8 @@ public abstract class Functions {
         }
     }
 
-    public static RowItem add(String url, String name) throws IOException{
+    public static void add(String url, String name) throws IOException{
         url = url+"/"+name;
         new File(url).mkdirs();
-        FileTime time = Files.getLastModifiedTime(Paths.get(url));
-        return new RowItem(url, name, true,time);
     }
 }
