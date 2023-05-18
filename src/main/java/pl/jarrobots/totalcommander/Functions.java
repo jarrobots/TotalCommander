@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.FileTime;
 
 public abstract class Functions {
     public static void cp(String url, String destination, String name){
@@ -18,16 +17,16 @@ public abstract class Functions {
         catch(IOException e){
             e.printStackTrace();
         }
-
     }
 
-    public static void rm(String url){
+    public static boolean rm(String url){
         try {
             Files.delete(Paths.get(url));
         }
         catch (IOException e){
-            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public static void add(String url, String name) throws IOException{

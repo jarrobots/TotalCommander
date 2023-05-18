@@ -11,13 +11,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class RowItems {
-    private String root;
+    private String oldURL;
     private ArrayList<RowItem> list;
 
     public RowItems() throws IOException {
         String url = System.getProperty("user.dir");
         list = generateList(url);
-        this.root = url;
+        this.oldURL = url;
     }
     private ArrayList<RowItem> generateList( String url) throws IOException {
         ArrayList<RowItem> list = new ArrayList<>();
@@ -34,10 +34,10 @@ public class RowItems {
         return FXCollections.observableList(list);
     }
 
-    public ObservableList<RowItem> getList(String name){
+    public ObservableList<RowItem> getList(String name, String oldURL){
         try {
-            root= name;
-            list = generateList(root);
+            this.oldURL = oldURL;
+            list = generateList(name);
         }
         catch(IOException e){
             e.printStackTrace();
