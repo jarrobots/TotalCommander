@@ -1,6 +1,6 @@
-package pl.jarrobots.totalcommander;
+package pl.jarrobots.totalcommander;3
 
-import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.FileTime
 import java.util.Date;
 
 public class RowItem {

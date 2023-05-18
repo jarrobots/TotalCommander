@@ -12,11 +12,13 @@ public class TableClass {
     private TableView<RowItem> table;
     private RowItems list;
     private String rootURL;
+    private String oldURL;
 
     public TableClass() throws IOException{
         list = new RowItems();
         table = new TableView<>();
         rootURL = System.getProperty("user.dir");
+        oldURL = rootURL;
 
         TableColumn<RowItem, String> name = new TableColumn<>("Name:");
         TableColumn<RowItem, Boolean> image = new TableColumn<>("Type:");
@@ -44,7 +46,9 @@ public class TableClass {
     }
 
     private void onClickDir(RowItems list, TableView<RowItem> table){
-        table.setItems(list.getList());
+        oldURL = rootURL;
+        rootURL = table.getSelectionModel().getSelectedItem().getURL();
+        table.setItems(list.getList(oldURL, rootURL));
     }
 
     public TableView<RowItem> getTable() {
